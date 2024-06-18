@@ -4,13 +4,13 @@ FROM node:20-alpine AS builder
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
-COPY package*.json ./
+COPY ./d2strapi/package*.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of the application source code
-COPY . .
+COPY ./d2strapi .
 
 # Stage 2: Runtime Stage
 FROM node:20-alpine
