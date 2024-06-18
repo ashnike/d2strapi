@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        run: |
+          if [ "$(docker-compose ps -q)" ]; then
+            echo "Docker Compose is running. Bringing it down..."
+            docker-compose down
+          else
+            echo "Docker Compose is not running."
+          fi
+            docker-compose up -d
