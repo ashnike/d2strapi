@@ -2,17 +2,15 @@ version: '3.8'
 
 services:
   strapi-service:
-    build:
-      context: ./d2strapi    
-      dockerfile: Dockerfile
+    image: ashniike/d2strapi  # Use the Docker image from Docker Hub
     container_name: strapi-app
     environment:
-      DATABASE_CLIENT: 'postgres'
-      DATABASE_HOST: 'db-service'
-      DATABASE_PORT: 5432
-      DATABASE_NAME: 'strapi'
-      DATABASE_USERNAME: 'strapi'
-      DATABASE_PASSWORD: 'password'
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - "1337:1337"
     depends_on:
@@ -22,9 +20,9 @@ services:
     image: postgres:latest
     container_name: postgres-db
     environment:
-      POSTGRES_DB: 'strapi'
-      POSTGRES_USER: 'strapi'
-      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
